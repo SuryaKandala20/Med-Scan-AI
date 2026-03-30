@@ -194,15 +194,13 @@ Large files are excluded from the repository:
 
 ---
 
-## What We Built
+## What I Built
 
-MedScan started as a simple Streamlit prototype. We rebuilt the entire thing from scratch into a full-stack web app because we wanted it to feel like a real product — not a data science demo.
-
-Here is what we added in v2:
+MedScan started as a simple Streamlit prototype. I rebuilt the entire thing from scratch into a full-stack web app to make it feel like a real product — not just a data science demo.
 
 **New in v2:**
 - Replaced Streamlit with a custom React frontend — full sidebar navigation, clean UI, mobile-friendly layout
-- Rebuilt the backend with FastAPI so we could support proper REST endpoints and real-time streaming
+- Rebuilt the backend with FastAPI to support proper REST endpoints and real-time streaming
 - Added streaming responses using Server-Sent Events — the AI replies word by word, just like ChatGPT, instead of making you wait for the full answer
 - Rewrote the report explainer to be fully multimodal — it now sends each page as both an image and extracted text to the model, so it works on any report type (ECG, ultrasound, labs, pathology) without any hardcoding
 - Added support for scanned PDFs using Tesseract OCR as a fallback when there is no embedded text
