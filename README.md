@@ -1,17 +1,30 @@
 # MedScan AI v2
 
-An AI-powered medical assistant that analyzes medical reports, performs skin lesion classification, answers medical questions, and checks drug interactions — built with React + FastAPI.
+MedScan AI is a full-stack medical assistant app built to help people understand their medical reports, check skin conditions, ask health questions, and look up drug interactions — all in one place. The backend is FastAPI with GPT-4o powering the AI features, and the frontend is React with real-time streaming responses so you get answers word by word instead of waiting.
+
+The idea behind this project was to make medical information more accessible. Most people receive a report from their doctor and have no idea what it means. MedScan lets you upload it and get a plain-language explanation instantly. The same goes for skin concerns, drug combinations, or just asking a medical question in your own words.
 
 ---
 
 ## Features
 
-- **Medical Report Explainer** — Upload any PDF (ECG, ultrasound, lab report, pathology) and get a plain-language AI explanation with page-by-page multimodal analysis
-- **Report Comparison** — Compare two reports side-by-side to track changes over time
-- **Skin Lesion Classifier** — Upload a dermoscopy image; a PyTorch model (trained on HAM10000) classifies the lesion type with confidence scores
-- **Medical Chat** — Ask any medical question; answers are grounded in a ChromaDB vector knowledge base with streaming word-by-word responses (like ChatGPT)
-- **Drug Interaction Checker** — Enter multiple drug names and get AI-powered interaction warnings
-- **Audit Logging** — Every interaction is logged to a local SQLite database, viewable from the Admin panel
+### Medical Report Explainer
+Upload any medical PDF — ECG, ultrasound, blood work, pathology report, X-ray summary — and MedScan breaks it down page by page in plain language. It reads both the text and the images on each page, so it works on scanned PDFs too. You get a structured explanation of what the report says, what the key values mean, and what to discuss with your doctor. No more Googling medical terms one by one.
+
+### Report Comparison
+Have two versions of the same report from different dates? Upload both and MedScan compares them side by side. It highlights what changed, what improved, and what got worse — useful for tracking chronic conditions or post-treatment follow-ups.
+
+### Skin Lesion Classifier
+Upload a photo of a skin lesion or mole and the app runs it through a PyTorch deep learning model (EfficientNet trained on the HAM10000 dermatology dataset with 10,000+ real images). It returns the predicted lesion type with a confidence score. The 7 classes it can detect include melanoma, melanocytic nevi, basal cell carcinoma, actinic keratosis, and more. This is not a replacement for a dermatologist but it gives you an informed starting point.
+
+### Medical Chatbot
+Ask any health or medical question in plain English. The chatbot is powered by GPT-4o and backed by a ChromaDB vector knowledge base so answers are grounded rather than made up. Responses stream word by word in real time. You can ask things like "what does a high creatinine level mean", "what are the symptoms of hypothyroidism", or "is it safe to take ibuprofen with blood pressure medication".
+
+### Drug Interaction Checker
+Type in two or more medication names and MedScan checks for known interactions between them. It explains what the interaction is, how serious it is, and what symptoms to watch for. Useful for patients managing multiple prescriptions or caregivers tracking medications for elderly family members.
+
+### Audit Log / Admin Panel
+Every query made through the app is logged — what feature was used, what was uploaded or asked, and when. The Admin page shows the full history. This was added to keep track of usage and for anyone deploying this in a clinical or research setting where you need a record of interactions.
 
 ---
 
@@ -181,15 +194,22 @@ Large files are excluded from the repository:
 
 ---
 
-## What Changed from v1 (Streamlit)
+## What We Built
 
-- Streaming responses — word-by-word output like ChatGPT via Server-Sent Events
-- Multimodal report analysis — model sees each page as both image and text; no hardcoded report types
-- Professional React UI with sidebar navigation replacing Streamlit
-- FastAPI backend with proper REST endpoints
-- Scanned PDF support via Tesseract OCR fallback
-- Audit logging with Admin panel
-- Docker support for one-command deployment
+MedScan started as a simple Streamlit prototype. We rebuilt the entire thing from scratch into a full-stack web app because we wanted it to feel like a real product — not a data science demo.
+
+Here is what we added in v2:
+
+**New in v2:**
+- Replaced Streamlit with a custom React frontend — full sidebar navigation, clean UI, mobile-friendly layout
+- Rebuilt the backend with FastAPI so we could support proper REST endpoints and real-time streaming
+- Added streaming responses using Server-Sent Events — the AI replies word by word, just like ChatGPT, instead of making you wait for the full answer
+- Rewrote the report explainer to be fully multimodal — it now sends each page as both an image and extracted text to the model, so it works on any report type (ECG, ultrasound, labs, pathology) without any hardcoding
+- Added support for scanned PDFs using Tesseract OCR as a fallback when there is no embedded text
+- Built a Report Comparison page so you can upload two reports and see what changed between them
+- Added a Drug Interaction Checker page
+- Added an Admin panel that shows a full audit log of every query made through the app
+- Containerized everything with Docker so anyone can run it with a single command
 
 ---
 
